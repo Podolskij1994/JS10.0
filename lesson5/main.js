@@ -9,11 +9,11 @@ let money,
     accumulatedMonth;
 
 let start = function () {
-    money = +prompt('Ваш доход месячный?', '50000');
-
-    while( isNaN(money) || money === '' || money === null) {
-        money = +prompt('Ваш доход месячный?', '50000');
-    }
+    do {
+        money = prompt('Ваш доход месячный?', '50000');
+    } 
+    while( isNaN(money) || money === '' || money === null)
+    +money;
 }
 
 start();
