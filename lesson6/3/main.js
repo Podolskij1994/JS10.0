@@ -5,6 +5,9 @@ let a,
 
 do {
     a = prompt('Введите число', '');
+    if (isNaN(+a)) {
+        continue;
+    }
     if (+a > 0) {
         sum += +a;
     }
