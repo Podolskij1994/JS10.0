@@ -1,44 +1,26 @@
 'use strict';
-let date = document.querySelector('.date'),
-    newDate = document.querySelector('.new-date'), 
-    text = date.textContent,
-    a, b, c, d;
+let date = new Date(),
+    newDate = document.querySelector('.date'), 
+    b = +date.getHours(),
+    a = b < 10 ? '0' + b : b;
+newDate.textContent = a + ':';
 
-  text = text.trim();
-  a = text.indexOf(':')
-  b = +text.slice(0, a);
-  b = b < 10 ? '0' + b : b;
-  d = b + ':';
-  c = a;
-  a++;
+b = +date.getMinutes();
+a = b < 10 ? '0' + b : b;
+newDate.textContent += a + ':';
 
-  a = text.indexOf(':', a);
-  b = +text.slice(c + 1, a);
-  b = b < 10 ? '0' + b : b;
-  d += b + ':';
-  c = a + 1;
-  a += 3;
+b = +date.getSeconds();
+a = b < 10 ? '0' + b : b;
+newDate.textContent += a + ' ';
+    
+b = +date.getDate();
+a = b < 10 ? '0' + b : b;
+newDate.textContent += a + '.';
 
-  b = +text.slice(c, a);
-  b = b < 10 ? '0' + b : b;
-  d += b + ' ';
-  a += 2;
-  c = a;
+b = +date.getMonth() + 1;
+a = b < 10 ? '0' + b : b;
+newDate.textContent += a + '.';
 
-  a = text.indexOf('.', a);
-  b = +text.slice(a - 2, a);
-  b = b < 10 ? '0' + b : b;
-  d += b + '.';
-  c = a;
-  a++;
-  
-  a = text.indexOf('.', a);
-  b = +text.slice(c + 1, a);
-  b = b < 10 ? '0' + b : b;
-  d += b + '.';
-
-  b = +text.slice(a+1)
-  d += b;
-
-  newDate.textContent = d;
-  
+b = +date.getFullYear();
+a = b < 10 ? '0' + b : b;
+newDate.textContent += a;
