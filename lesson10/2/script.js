@@ -35,6 +35,31 @@ let symbols = [
     numbers = [
       '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'Backspace' 
     ]
+
+function checkInputText () {
+  let a = false;
+  symbols.forEach(item => {
+    if (event.key === item) {
+      a = true;
+    }
+  })
+  if (!a && event.key !== 'Backspace') {
+    console.log(event.key);
+    event.preventDefault();
+  }
+}
+
+function checkInputNumber (event) {
+  let a = false;
+  numbers.forEach(item => {
+    if (event.key === item) {
+      a = true;
+    }
+  })
+  if (!a && event.key !== 'Backspace') {
+    event.preventDefault();
+  }
+}
   
 const AppData = function() {
   this.budget = 0;
@@ -101,30 +126,9 @@ AppData.prototype.addExpensesBlock = function () {
   expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
   expensesItems = document.querySelectorAll('.expenses-items');
 
-  cloneExpensesItem.querySelector('.expenses-title').addEventListener('keydown', function () {
-    let a = false;
-    symbols.forEach(item => {
-      if (event.key === item) {
-        a = true;
-      }
-    })
-    if (!a && event.key !== 'Backspace') {
-      console.log(event.key);
-      event.preventDefault();
-    }
-  });
+  cloneExpensesItem.querySelector('.expenses-title').addEventListener('keydown', checkInputText);
 
-  cloneExpensesItem.querySelector('.expenses-amount').addEventListener('keydown', function (event) {
-    let a = false;
-    numbers.forEach(item => {
-      if (event.key === item) {
-        a = true;
-      }
-    })
-    if (!a && event.key !== 'Backspace') {
-      event.preventDefault();
-    }
-  });
+  cloneExpensesItem.querySelector('.expenses-amount').addEventListener('keydown', checkInputNumber);
 
   if (expensesItems.length === 3) {
     expensesPlus.style.display = 'none';
@@ -138,30 +142,9 @@ AppData.prototype.addIncomeBlock = function () {
   incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomePlus);
   incomeItems = document.querySelectorAll('.income-items');
 
-  cloneIncomeItem.querySelector('.income-title').addEventListener('keydown', function (event) {
-    let a = false;
-    symbols.forEach(item => {
-      if (event.key === item) {
-        a = true;
-      }
-    })
-    if (!a && event.key !== 'Backspace') {
-      console.log(event.key);
-      event.preventDefault();
-    }
-  });
+  cloneIncomeItem.querySelector('.income-title').addEventListener('keydown', checkInputText);
 
-  cloneIncomeItem.querySelector('.income-amount').addEventListener('keydown', function (event) {
-    let a = false;
-    numbers.forEach(item => {
-      if (event.key === item) {
-        a = true;
-      }
-    })
-    if (!a && event.key !== 'Backspace') {
-      event.preventDefault();
-    }
-  });
+  cloneIncomeItem.querySelector('.income-amount').addEventListener('keydown', checkInputNumber);
 
   if (incomeItems.length === 3) {
     incomePlus.style.display = 'none';
@@ -351,30 +334,7 @@ targetAmount.addEventListener('keydown', function (event) {
   checkInputNumber(event);
 })
 
-function checkInputText () {
-  let a = false;
-  symbols.forEach(item => {
-    if (event.key === item) {
-      a = true;
-    }
-  })
-  if (!a && event.key !== 'Backspace') {
-    console.log(event.key);
-    event.preventDefault();
-  }
-}
 
-function checkInputNumber (event) {
-  let a = false;
-  numbers.forEach(item => {
-    if (event.key === item) {
-      a = true;
-    }
-  })
-  if (!a && event.key !== 'Backspace') {
-    event.preventDefault();
-  }
-}
 
 cancel.addEventListener('click', this.reset);
 };
