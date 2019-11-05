@@ -30,7 +30,7 @@ let start = document.querySelector('#start'),
 
 let symbols = [
   'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'я', 'ч', 'с',
-  ', ', ', ', ', ',',', '.', '!', '?', 'ё', ' ', 'Backspace'
+  ', ', ', ', ', ',',', '.', '!', '?', 'ё', ' ', 'Backspace', 'м', 'а', 'и', 'т','ь',  'б', 'ю'
 ],
     numbers = [
       '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'Backspace' 
@@ -101,12 +101,29 @@ AppData.prototype.addExpensesBlock = function () {
   expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
   expensesItems = document.querySelectorAll('.expenses-items');
 
-  cloneExpensesItem.querySelector('.expenses-title').addEventListener('keydown', function (event) {
-    checkInputText(event);
+  cloneExpensesItem.querySelector('.expenses-title').addEventListener('keydown', function () {
+    let a = false;
+    symbols.forEach(item => {
+      if (event.key === item) {
+        a = true;
+      }
+    })
+    if (!a && event.key !== 'Backspace') {
+      console.log(event.key);
+      event.preventDefault();
+    }
   });
 
   cloneExpensesItem.querySelector('.expenses-amount').addEventListener('keydown', function (event) {
-    checkInputNumber(event);
+    let a = false;
+    numbers.forEach(item => {
+      if (event.key === item) {
+        a = true;
+      }
+    })
+    if (!a && event.key !== 'Backspace') {
+      event.preventDefault();
+    }
   });
 
   if (expensesItems.length === 3) {
@@ -122,11 +139,28 @@ AppData.prototype.addIncomeBlock = function () {
   incomeItems = document.querySelectorAll('.income-items');
 
   cloneIncomeItem.querySelector('.income-title').addEventListener('keydown', function (event) {
-    checkInputText(event);
+    let a = false;
+    symbols.forEach(item => {
+      if (event.key === item) {
+        a = true;
+      }
+    })
+    if (!a && event.key !== 'Backspace') {
+      console.log(event.key);
+      event.preventDefault();
+    }
   });
 
   cloneIncomeItem.querySelector('.income-amount').addEventListener('keydown', function (event) {
-    checkInputNumber(event);
+    let a = false;
+    numbers.forEach(item => {
+      if (event.key === item) {
+        a = true;
+      }
+    })
+    if (!a && event.key !== 'Backspace') {
+      event.preventDefault();
+    }
   });
 
   if (incomeItems.length === 3) {
@@ -289,16 +323,16 @@ salaryAmount.addEventListener('keydown', function (event) {
   checkInputNumber(event);
 });
 
-incomeItems[0].querySelector('.income-title').addEventListener('keydown', function (event) {
-  checkInputText(event);
+incomeItems[0].querySelector('.income-title').addEventListener('keydown', function () {
+  checkInputText();
 });
 
 incomeItems[0].querySelector('.income-amount').addEventListener('keydown', function (event) {
   checkInputNumber(event);
 });
 
-additionalIncomeItem.forEach(item => item.addEventListener('keydown', function (event) {
-  checkInputText(event);
+additionalIncomeItem.forEach(item => item.addEventListener('keydown', function () {
+  checkInputText();
 }));
 
 expensesItems[0].querySelector('.expenses-title').addEventListener('keydown', function (event) {
@@ -309,15 +343,15 @@ expensesItems[0].querySelector('.expenses-amount').addEventListener('keydown', f
   checkInputNumber(event);
 });
 
-additionalExpensesItem.addEventListener('keydown', function (event) {
-  checkInputText(event);
+additionalExpensesItem.addEventListener('keydown', function () {
+  checkInputText();
 })
 
 targetAmount.addEventListener('keydown', function (event) {
   checkInputNumber(event);
 })
 
-function checkInputText (event) {
+function checkInputText () {
   let a = false;
   symbols.forEach(item => {
     if (event.key === item) {
@@ -325,6 +359,7 @@ function checkInputText (event) {
     }
   })
   if (!a && event.key !== 'Backspace') {
+    console.log(event.key);
     event.preventDefault();
   }
 }
