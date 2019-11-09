@@ -47,8 +47,21 @@ window.addEventListener('DOMContentLoaded', () => {
         let idClock = setInterval(updateClock, 1000);
         
   }
+  let date = new Date(),
+      days = date.getDate(),
+      month = date.getMonth(),
+      year = date.getFullYear();
+      if (date.getHours() >= 17) {
+        date.setFullYear(year, month, days + 2);
+      }
+      else {
+        date.setFullYear(year, month, days + 1);
+      }
+      
+      date.setHours(-5,0,0);
+      console.log(date);
 
-  countTimer('10 November 2019');
+  countTimer(date);
     
   function checkTime () {
     let date = new Date(),
