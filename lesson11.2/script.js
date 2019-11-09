@@ -39,6 +39,8 @@ const symbols = [
     numbers = [
       '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'Backspace' 
     ];
+let arrCookie = ['budgetMonthValue', 'budgetDayValue', 'expensesMonthValue', 'additionalExpensesValue', 
+    'additionalIncomeValue', 'targetMonthValue', 'incomePeriodValue'];
 
 function checkInputText () {  //Проверяет текстовые инпуты
   let a = false;
@@ -98,6 +100,7 @@ AppData.prototype.start = function () {     //Метод, который зап�
   this.getAdd(additionalIncomeItem, 'addIncome');
 
   this.showResult();
+  this.addStorage();
 
   start.style.display = 'none';
   cancel.style.display = 'block';
@@ -119,7 +122,6 @@ AppData.prototype.start = function () {     //Метод, который зап�
   depositBank.setAttribute('disabled', '');
   depositPercent.setAttribute('disabled', '');
   depositAmount.setAttribute('disabled', '');
-  
 };
 
 AppData.prototype.showResult = function () {  //Метод, переносит все результаты
@@ -130,6 +132,23 @@ AppData.prototype.showResult = function () {  //Метод, переносит �
   additionalIncomeValue.value = this.addIncome.join(', ');
   targetMonthValue.value = Math.ceil(this.getTargetMonth());
   incomePeriodValue.value = this.calcPeriod();
+};
+
+AppData.prototype.addStorage = function () {    //Метод для записи в storage и cookie
+  localStorage.setItem('budgetMonthValue', this.budgetMonth);
+  localStorage.setItem('budgetDayValue', Math.round(+this.budgetDay));
+  localStorage.setItem('expensesMonthValue', this.expensesMonth);
+  localStorage.setItem('additionalExpensesValue', this.addExpenses.join(', '));
+  localStorage.setItem('additionalIncomeValue', this.addIncome.join(', '));
+  localStorage.setItem('targetMonthValue', Math.ceil(this.getTargetMonth()));
+  localStorage.setItem('incomePeriodValue', this.calcPeriod());
+  setCookie('budgetMonthValue', this.budgetMonth);
+  setCookie('budgetDayValue', Math.round(+this.budgetDay));
+  setCookie('expensesMonthValue', this.expensesMonth);
+  setCookie('additionalExpensesValue', this.addExpenses.join(', '));
+  setCookie('additionalIncomeValue', this.addIncome.join(', '));
+  setCookie('targetMonthValue', Math.ceil(this.getTargetMonth()));
+  setCookie('incomePeriodValue', this.calcPeriod());
 };
 
 AppData.prototype.addBlock = function (block, text, plus) { //Универсальная функция для 
@@ -160,7 +179,6 @@ AppData.prototype.getIncome = function () {     //функция для полу
     }
   });
 };
-
 
 AppData.prototype.getExpenses = function () {   //функция для получения расходов
   expensesItems.forEach(item => {
@@ -256,6 +274,7 @@ AppData.prototype.reset = function () {     //Начать заново. Дел�
   additionalExpensesValue.value = '';
   incomePeriodValue.value = '';
   targetMonthValue.value = '';
+  clearStorage();
 };
 
 AppData.prototype.getInfoDeposit = function () {      //Считаем вклад
@@ -338,6 +357,77 @@ AppData.prototype.addEvent = function () {      //функция для доба
     }
   });
 };
+
+function setCookie(key, value) {    //Функция для добавления cookie
+  let cookieStr = key + '=' + value;
+  // if(year) {
+  //   const expires = new Date(year, month - 1, day);
+  //   console.log(expires);
+  //   cookieStr += '; expires' + expires.toGMTString();
+  // }
+  let date = new Date(Date.now() + 86400e3);
+  document.cookie = cookieStr + '; expires=' + date;
+}
+
+function checkCookie() {
+  let count = 0;
+  arrCookie.forEach(item => {
+    count = getCookie(item) === localStorage[item] ? count + 1 : count;
+  });
+  console.log(count);
+  if (count === 7 && localStorage.budgetMonthValue > 0) {
+    start.style.display = 'none';
+    cancel.style.display = 'block';
+    salaryAmount.setAttribute('disabled', '');
+    incomeItems = document.querySelectorAll('.income-items');
+    expensesItems = document.querySelectorAll('.expenses-items');
+    incomeItems.forEach( item => {
+      item.querySelector('.income-title').setAttribute('disabled', '');
+      item.querySelector('.income-amount').setAttribute('disabled', '');
+    });
+    additionalIncomeItem.forEach(item => item.setAttribute('disabled', ''));
+    expensesItems.forEach( item => {
+      item.querySelector('.expenses-title').setAttribute('disabled', '');
+      item.querySelector('.expenses-amount').setAttribute('disabled', '');
+    });
+    additionalExpensesItem.setAttribute('disabled', '');
+    depositCheck.setAttribute('disabled', '');
+    targetAmount.setAttribute('disabled', '');
+    depositBank.setAttribute('disabled', '');
+    depositPercent.setAttribute('disabled', '');
+    depositAmount.setAttribute('disabled', '');
+    budgetMonthValue.value = localStorage.budgetMonthValue;
+    budgetDayValue.value = localStorage.budgetDayValue;
+    expensesMonthValue.value = localStorage.expensesMonthValue;
+    additionalExpensesValue.value = localStorage.additionalExpensesValue;
+    additionalIncomeValue.value = localStorage.additionalIncomeValue;
+    targetMonthValue.value = localStorage.targetMonthValue;
+    incomePeriodValue.value = localStorage.incomePeriodValue;
+  }
+  else {
+    clearStorage();
+  }
+}
+
+function getCookie(name) {    // Функция для получения cookie по имени
+  let matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+function deleteCookie(name) {   //Удаляет cookie
+  document.cookie = name + "= ; expires=" + 'Tue, 19 Jan 2018 03:14:07 GMT';
+}
+
+function clearStorage () {
+  arrCookie.forEach(item => {
+    deleteCookie(item);
+    delete localStorage[item];
+  });
+}
+
+checkCookie();
 
 const appData = new AppData ();   //Создаем объект
 
