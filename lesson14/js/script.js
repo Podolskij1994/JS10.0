@@ -115,7 +115,9 @@ window.addEventListener('DOMContentLoaded', () => {
           body = document.querySelector('body');
 
     body.addEventListener('click', event => {
-      if (!event.target.closest('menu') && !event.target.closest('.menu')){
+      console.dir(event.target);
+      if (!event.target.closest('menu') && !event.target.closest('.menu') || 
+      event.target.closest('.close-btn') || event.target.nodeName === 'A'){
         menu.classList.remove('active-menu');
       }
       else if (event.target.closest('.menu')){
@@ -123,15 +125,8 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
     function handlerMenu () {
-      console.log('click');
       menu.classList.toggle('active-menu');
     }
-    menu.addEventListener('click', event => {
-      if (event.target.closest('a') || 
-      event.target.classList.contains('close-btn')) {
-        handlerMenu();
-      }
-    });
   };
 
   toggleMenu();
