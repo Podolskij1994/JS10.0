@@ -115,11 +115,13 @@ window.addEventListener('DOMContentLoaded', () => {
           body = document.querySelector('body');
 
     body.addEventListener('click', event => {
-      if (!event.target.closest('menu')){
+      if (!event.target.closest('menu') && !event.target.closest('.menu')){
         menu.classList.remove('active-menu');
       }
-      
-    })
+      else if (event.target.closest('.menu')){
+        handlerMenu();
+      }
+    });
     function handlerMenu () {
       console.log('click');
       menu.classList.toggle('active-menu');
@@ -129,9 +131,6 @@ window.addEventListener('DOMContentLoaded', () => {
       event.target.classList.contains('close-btn')) {
         handlerMenu();
       }
-    });
-    btnMenu.addEventListener('click', () => {
-      setTimeout(handlerMenu, 100);
     });
   };
 
