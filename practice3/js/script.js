@@ -252,3 +252,6 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   carousel.init();
 });
+
+
+
