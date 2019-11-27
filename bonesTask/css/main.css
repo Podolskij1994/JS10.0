@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    margin-top: 30px;
+    width: 150px;
+    height:  350px;
+    text-align: center;
+    margin-right: 25px;
+    border: 1px solid green
+}
+
+.card__img {
+    width: 100%;
+}
+
+.card p {
+    margin: 5px;
+}
