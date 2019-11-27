@@ -1,4 +1,5 @@
 let togglePopUp = () => {
+  let opacity = 0;
   const popUp = document.querySelector('.popup'),
         popUpBtn = document.querySelectorAll('.popup-btn'),
         popUpClose = document.querySelector('.popup-close');

@@ -1,9 +1,10 @@
 class Validator {
-  constructor ({selector, pattern = {}, method, num}) {
+  constructor ({selector, pattern = {}, method, num, errors}) {
     this.form = document.querySelector(selector);
     this.pattern = pattern;
     this.method = method;
     this.num = num;
+    this.errors = errors;
     this.elementsForm = [...this.form.elements].filter( item => {
       return item.tagName.toLowerCase() !== 'button' && 
       item.type !== 'button';
@@ -58,12 +59,12 @@ class Validator {
     if (this.isValid(target)) {
       this.showSuccess(target);
       this.error.delete(target);
-      errors[this.num - 1] = this.error.size;
+      this.errors = this.error.size;
     }
     else {
       this.showError(target);
       this.error.add(target);
-      errors[this.num - 1] = this.error.size;
+      this.errors = this.error.size;
     }
   }
   

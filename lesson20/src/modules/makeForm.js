@@ -1,4 +1,4 @@
-const makeForm = (num) => {
+const makeForm = (num, errors) => {
   const errorMessage = 'Что-то пошло не так...',
         loadMessage = 'Загрузка...',
         successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
@@ -20,7 +20,8 @@ const makeForm = (num) => {
   statusMessage.textContent = loadMessage;
   form.addEventListener('submit', event => {
     event.preventDefault();
-    form.appendChild(statusMessage);
+    if (errors === 0) {
+      form.appendChild(statusMessage);
     const formData = new FormData(form);
     let body = {};
     for (let val of formData.entries()) {
@@ -29,6 +30,7 @@ const makeForm = (num) => {
     postData(body)
     .then(outputData)
     .catch(errorData);
+    }
   });
 };
 const postData = (body) => { 

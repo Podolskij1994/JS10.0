@@ -7,7 +7,8 @@ import tabs from './modules/tabs';
 import slider from './modules/slider';
 import changePhoto from './modules/changePhoto';
 import makeForm from './modules/makeForm';
-// import Validator from './modules/Validator';
+import calc from './modules/calc';
+import Validator from './modules/Validator';
 
   //Timer
   let date = new Date(),
@@ -49,66 +50,74 @@ import makeForm from './modules/makeForm';
   
   changePhoto();
 
-  //Send Form
-  // let errors = [0,0,0];
-
-  makeForm('1');
-  makeForm('2');
-  makeForm('3');
+  
   //Валидатор
   
 
-  // const valid1 = new Validator({
-  //   selector: '#form1',
-  //   pattern: {},
-  //   method: {
-  //     'form1-phone': [
-  //       ['notEmpty'],
-  //       ['pattern', 'phone']
-  //     ],
-  //     'form1-email': [
-  //       ['pattern', 'email']
-  //     ],
-  //     'form1-name': [
-  //       ['notEmpty'],
-  //     ]
-  //   },
-  //   num: 1,
-  // });
-  // valid1.init();
-  // const valid2 = new Validator({
-  //   selector: '#form2',
-  //   pattern: {},
-  //   method: {
-  //     'form2-phone': [
-  //       ['notEmpty'],
-  //       ['pattern', 'phone']
-  //     ],
-  //     'form2-email': [
-  //       ['pattern', 'email']
-  //     ],
-  //     'form2-name': [
-  //       ['notEmpty'],
-  //     ]
-  //   },
-  //   num: 2,
-  // });
-  // valid2.init();
-  // const valid3 = new Validator({
-  //   selector: '#form3',
-  //   pattern: {},
-  //   method: {
-  //     'form3-phone': [
-  //       ['notEmpty'],
-  //       ['pattern', 'phone']
-  //     ],
-  //     'form3-email': [
-  //       ['pattern', 'email']
-  //     ],
-  //     'form3-name': [
-  //       ['notEmpty'],
-  //     ]
-  //   },
-  //   num: 3,
-  // });
-  // valid3.init();
+  const valid1 = new Validator({
+    selector: '#form1',
+    pattern: {},
+    method: {
+      'form1-phone': [
+        ['notEmpty'],
+        ['pattern', 'phone']
+      ],
+      'form1-email': [
+        ['pattern', 'email']
+      ],
+      'form1-name': [
+        ['notEmpty'],
+      ]
+    },
+    num: 1,
+    errors: 0,
+  });
+  valid1.init();
+  const valid2 = new Validator({
+    selector: '#form2',
+    pattern: {},
+    method: {
+      'form2-phone': [
+        ['notEmpty'],
+        ['pattern', 'phone']
+      ],
+      'form2-email': [
+        ['pattern', 'email']
+      ],
+      'form2-name': [
+        ['notEmpty'],
+      ]
+    },
+    num: 2,
+    errors: 0,
+  });
+  valid2.init();
+  const valid3 = new Validator({
+    selector: '#form3',
+    pattern: {},
+    method: {
+      'form3-phone': [
+        ['notEmpty'],
+        ['pattern', 'phone']
+      ],
+      'form3-email': [
+        ['pattern', 'email']
+      ],
+      'form3-name': [
+        ['notEmpty'],
+      ]
+    },
+    num: 3,
+    errors: 0,
+  });
+  valid3.init();
+
+  //Send Form
+
+  makeForm('1', valid1.errors);
+  makeForm('2', valid2.errors);
+  makeForm('3', valid3.errors);
+
+  //калькулятор
+
+  calc();
