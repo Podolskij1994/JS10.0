@@ -113,6 +113,7 @@ import Validator from './modules/Validator';
   valid3.init();
 
   //Send Form
+  
 
   makeForm('1', valid1.errors);
   makeForm('2', valid2.errors);

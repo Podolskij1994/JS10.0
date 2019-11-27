@@ -14,13 +14,21 @@ const makeForm = (num, errors) => {
     },
     errorData = (error) => {
       statusMessage.textContent = errorMessage;
-      console.error(error);
     };
   statusMessage.style.color = 'white';
   statusMessage.textContent = loadMessage;
   form.addEventListener('submit', event => {
+    const inputs = form.querySelectorAll('input');
+    let errors = 0;
+    inputs.forEach (elem => {
+      if (elem.nextElementSibling && elem.nextElementSibling.classList.contains('validator-error')) {
+        errors += 1;
+      }
+    })
+    if (errors) {
+      return;
+    }
     event.preventDefault();
-    if (errors === 0) {
       form.appendChild(statusMessage);
     const formData = new FormData(form);
     let body = {};
@@ -30,7 +38,6 @@ const makeForm = (num, errors) => {
     postData(body)
     .then(outputData)
     .catch(errorData);
-    }
   });
 };
 const postData = (body) => { 

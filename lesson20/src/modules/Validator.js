@@ -60,11 +60,13 @@ class Validator {
       this.showSuccess(target);
       this.error.delete(target);
       this.errors = this.error.size;
+      console.log(this.errors);
     }
     else {
       this.showError(target);
       this.error.add(target);
       this.errors = this.error.size;
+      console.log(this.errors);
     }
   }
   

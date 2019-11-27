@@ -803,3 +803,6 @@ footer {
       right: 5px; }
     .portfolio-btn.prev {
       left: 5px; } }
+.popup .validator-error {
+  margin-bottom: 17px;
+}
