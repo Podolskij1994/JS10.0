@@ -15,14 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
       request.send();
 
       request.addEventListener('readystatechange', () => {
-
-          if (request.readyState === 4 && request.status === 200) {
+          if (request.readyState === 4 ) {
+            if (request.status === 200) {
               resolve(request.responseText);
-
-          } else {
-            reject(request.status);
+            }
+            else {
+              reject(request.status);
+            }
               
-          }
+
+          } 
       });
     });
     };
