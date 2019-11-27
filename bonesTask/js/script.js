@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (item.movies) {
                 if (item.movies.indexOf(check) !== -1) {
                     makeCard(item);
+                    console.log(item);
                 }
             } 
         }
@@ -21,17 +22,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     img = document.createElement('img'),
                     actors = document.createElement('p'),
                     name = document.createElement('p'),
-                    status = document.createElement('p');
+                    status = document.createElement('p'),
+                    films = document.createElement('p');
         
         card.classList.add('card');
         img.classList.add('card__img');
         actors.classList.add('card__actors');
         name.classList.add('card__name');
         status.classList.add('card__status');
+        films.classList.add('card__films')
 
         card.appendChild(img);
         card.appendChild(actors);
         card.appendChild(name);
+        card.appendChild(films);
         card.appendChild(status);
 
         img.src = data.photo;
@@ -39,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         actors.textContent = data.actors;
         name.textContent = data.name;
         status.textContent = data.status;
+        films.textContent = data.movies.join(', ')
 
         container.appendChild(card);
     };
