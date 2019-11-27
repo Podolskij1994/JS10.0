@@ -1,63 +1,50 @@
-let start = document.querySelector('.start'),
-    reset = document.querySelector('.reset'),
-    div = document.querySelector('.div'),
-    count = 0;
+document.addEventListener('DOMContentLoaded', () => {
+    'use strict';
 
-    function animate () {
-        if (start.classList.contains('work')) {
-            id = requestAnimationFrame(animate);
-        count++;
-        if(count < 500) {
-            div.style.top = count + 'px';
-        }
-        else {
-            cancelAnimationFrame(id);
-        }
-        }
-        else {
-            cancelAnimationFrame(id);
-        }
+    const select = document.getElementById('cars'),
+        output = document.getElementById('output');
+
+    
+
+    const getData = (request) => {
+      return new Promise ((resolve, reject) => {
+      
         
-    }
-    start.addEventListener('click', function() {
-        this.classList.toggle('work');
-        let id = requestAnimationFrame(animate);
-    })
+      request.open('GET', './cars.json');
+      request.setRequestHeader('Content-type', 'application/json');
+      request.send();
 
-    reset.addEventListener('click', function () {
-        start.classList.remove('work');
-        div.style.top = '0';
-    })
+      request.addEventListener('readystatechange', () => {
 
-let obj = {
-    print1() {
-        console.log('Крот');
-    },
-    print2() {
-        console.log('овце,');
-    },
-    print3() {
-        console.log('жирафу,');
-    },
-    print4() {
-        console.log('зайке');
-    },
-    print5() {
-        console.log('голубые');
-    },
-    print6() {
-        console.log('сшил');
-    },
-    print7() {
-        console.log('фуфайки');
-    }
-},
-    c = 0;
-function set() {
-    c++;
-    obj['print' + c]();
-    if (c <= 7) {
-        setTimeout(set, 100);
-    }
-}
-setTimeout(set, 100);
+          if (request.readyState === 4 && request.status === 200) {
+              resolve(request.responseText);
+
+          } else {
+            reject(request.status);
+              
+          }
+      });
+    });
+    };
+
+    select.addEventListener('change', () => {      
+      const request = new XMLHttpRequest();
+      getData (request)
+      .then ((ans) => {
+        const data = JSON.parse(ans);
+              console.log('Заходим');
+              data.cars.forEach(item => {
+                  if (item.brand === select.value) {
+                      const {brand, model, price} = item;
+                      output.innerHTML = `Тачка ${brand} ${model} <br>
+                      Цена: ${price}$`;
+                  }
+              });
+      })
+      .catch ((error) => {
+        output.innerHTML = 'Произошла ошибка';
+        console.error(error);
+      });
+    });
+
+});
