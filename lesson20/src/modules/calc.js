@@ -35,7 +35,7 @@ const calc = () => {
   const setTotal = (total, count) => {
     totalValue.textContent = count;
     if (count < total) {
-      count++;
+      count += 25;
       requestAnimationFrame(() => setTotal (total, count));
     }
   };
