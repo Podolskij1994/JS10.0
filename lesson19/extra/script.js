@@ -1,63 +1,43 @@
-let start = document.querySelector('.start'),
-    reset = document.querySelector('.reset'),
-    div = document.querySelector('.div'),
-    count = 0;
+const   buttons = document.querySelector('.buttons'),
+            card = document.querySelector('.card');
 
-    function animate () {
-        if (start.classList.contains('work')) {
-            id = requestAnimationFrame(animate);
-        count++;
-        if(count < 500) {
-            div.style.top = count + 'px';
-        }
-        else {
-            cancelAnimationFrame(id);
-        }
-        }
-        else {
-            cancelAnimationFrame(id);
-        }
-        
+const addFileToCard = file => {
+    const reg = /\.mp4$/ig;
+    let elem = document.querySelector('.file');
+    console.log(file);
+    if (elem) {
+        card.removeChild(elem);
     }
-    start.addEventListener('click', function() {
-        this.classList.toggle('work');
-        let id = requestAnimationFrame(animate);
-    })
+    
+    if (reg.test(file)) {
+        elem = document.createElement('video');
+        elem.autoplay = true;
+    }
+    else {
+        elem = document.createElement('img');
+    }
 
-    reset.addEventListener('click', function () {
-        start.classList.remove('work');
-        div.style.top = '0';
-    })
+    card.appendChild(elem);
+    elem.classList.add('file');
+    elem.src = file;
+};
 
-let obj = {
-    print1() {
-        console.log('Крот');
-    },
-    print2() {
-        console.log('овце,');
-    },
-    print3() {
-        console.log('жирафу,');
-    },
-    print4() {
-        console.log('зайке');
-    },
-    print5() {
-        console.log('голубые');
-    },
-    print6() {
-        console.log('сшил');
-    },
-    print7() {
-        console.log('фуфайки');
+buttons.addEventListener('click', event => {
+    const target = event.target;
+    
+    if (target.classList.contains('cat') || target.classList.contains('dog')) {
+        const src = target.dataset.src;
+        fetch(src)
+            .then(response => {
+                if (response.status !== 200) {
+                    throw new Error ('Status network not 200');
+                }
+                return (response.json());
+            })
+            .then (data => {
+                let ans = data.file || data.url;
+                addFileToCard(ans);
+            })
+            .catch (error => console.error(error))
     }
-},
-    c = 0;
-function set() {
-    c++;
-    obj['print' + c]();
-    if (c <= 7) {
-        setTimeout(set, 100);
-    }
-}
-setTimeout(set, 100);
+})

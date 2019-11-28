@@ -4,10 +4,22 @@ body{
 button{
     background: red;
 }
-.div{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: #000;
-    position: relative;
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+}
+.buttons {
+    width: max-content;
+    margin: 20px auto;
+}
+
+.card {
+    width: 700px;
+    margin: 10px auto;
+}
+
+.card img, .card video {
+    width: 100%;
 }
